@@ -27,28 +27,74 @@ const photos = [
   { src: 'assets/photos/bocchi26.jpg', caption: '' }
 ];
 
+const photosPerPage = 9;
+let currentPage = 1;
+
 const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const caption = document.getElementById('caption');
 const closeBtn = document.querySelector('.close');
 
-photos.forEach(photo => {
-  const img = document.createElement('img');
-  img.src = photo.src;
-  img.alt = ''; // opsional: juga dikosongkan
-  img.onclick = () => {
-    lightbox.style.display = 'block';
-    lightboxImg.src = photo.src;
-    caption.textContent = photo.caption; // akan jadi kosong
-  };
-  gallery.appendChild(img);
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const pageIndicator = document.getElementById('page-indicator');
+
+function renderGallery() {
+  gallery.innerHTML = '';
+
+  const start = (currentPage - 1) * photosPerPage;
+  const end = start + photosPerPage;
+  const currentPhotos = photos.slice(start, end);
+
+  currentPhotos.forEach(photo => {
+    const img = document.createElement('img');
+    img.src = photo.src;
+    img.alt = '';
+
+    img.onclick = () => {
+      lightbox.style.display = 'block';
+      lightboxImg.src = photo.src;
+      caption.textContent = '';
+      document.body.style.overflow = 'hidden';
+    };
+
+    gallery.appendChild(img);
+  });
+
+  const totalPages = Math.ceil(photos.length / photosPerPage);
+  pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
+}
+
+prevBtn.onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderGallery();
+  }
+};
+
+nextBtn.onclick = () => {
+  if (currentPage < Math.ceil(photos.length / photosPerPage)) {
+    currentPage++;
+    renderGallery();
+  }
+};
+
+const closeLightbox = () => {
+  lightbox.style.display = 'none';
+  document.body.style.overflow = '';
+};
+
+closeBtn.onclick = closeLightbox;
+lightbox.onclick = e => {
+  if (e.target === lightbox) closeLightbox();
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
 });
 
-closeBtn.onclick = () => lightbox.style.display = 'none';
-lightbox.onclick = (e) => {
-  if (e.target === lightbox) lightbox.style.display = 'none';
-};
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') lightbox.style.display = 'none';
-});
+renderGallery();
