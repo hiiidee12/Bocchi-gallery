@@ -58,7 +58,7 @@ header p {
   gap: 1.8rem;
   padding: 0 1.5rem 2rem;
 
-  /* SMOOTH SLIDE */
+  /* Smooth slide */
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
@@ -95,7 +95,7 @@ header p {
   justify-content: center;
   align-items: center;
   gap: 1.4rem;
-  margin: 1.5rem auto 3rem;
+  margin: 1.5rem auto 2.5rem;
 }
 
 .pagination button {
@@ -122,6 +122,39 @@ header p {
 #page-indicator {
   font-size: 0.9rem;
   opacity: 0.85;
+}
+
+/* =========================
+   FOOTER BIO (FADE-IN)
+   ========================= */
+.footer {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.footer.show {
+  opacity: 0.85;
+  transform: translateY(0);
+}
+
+.footer p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.footer span {
+  font-style: italic;
 }
 
 /* =========================
@@ -178,6 +211,10 @@ header p {
 
   .gallery img {
     height: 300px;
+  }
+
+  .footer p {
+    font-size: 0.85rem;
   }
 
   .close {
