@@ -30,45 +30,54 @@ const photos = [
 const photosPerPage = 9;
 let currentPage = 1;
 
+/* ELEMENT */
 const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const caption = document.getElementById('caption');
 const closeBtn = document.querySelector('.close');
-
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 
+/* RENDER GALLERY (SMOOTH) */
 function renderGallery() {
-  gallery.innerHTML = '';
+  gallery.classList.add('fade-out');
 
-  const start = (currentPage - 1) * photosPerPage;
-  const end = start + photosPerPage;
-  const currentPhotos = photos.slice(start, end);
+  setTimeout(() => {
+    gallery.innerHTML = '';
 
-  currentPhotos.forEach(photo => {
-    const img = document.createElement('img');
-    img.src = photo.src;
-    img.alt = '';
+    const start = (currentPage - 1) * photosPerPage;
+    const end = start + photosPerPage;
+    const currentPhotos = photos.slice(start, end);
 
-    img.onclick = () => {
-      lightbox.style.display = 'block';
-      lightboxImg.src = photo.src;
-      caption.textContent = '';
-      document.body.style.overflow = 'hidden';
-    };
+    currentPhotos.forEach(photo => {
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = '';
 
-    gallery.appendChild(img);
-  });
+      img.onclick = () => {
+        lightbox.style.display = 'block';
+        lightboxImg.src = photo.src;
+        caption.textContent = '';
+        document.body.style.overflow = 'hidden';
+      };
 
-  const totalPages = Math.ceil(photos.length / photosPerPage);
-  pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+      gallery.appendChild(img);
+    });
 
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
+    const totalPages = Math.ceil(photos.length / photosPerPage);
+    pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+
+    gallery.classList.remove('fade-out');
+    gallery.classList.add('fade-in');
+  }, 200);
 }
 
+/* PAGINATION */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
     currentPage--;
@@ -83,10 +92,11 @@ nextBtn.onclick = () => {
   }
 };
 
-const closeLightbox = () => {
+/* LIGHTBOX CLOSE */
+function closeLightbox() {
   lightbox.style.display = 'none';
   document.body.style.overflow = '';
-};
+}
 
 closeBtn.onclick = closeLightbox;
 lightbox.onclick = e => {
@@ -97,4 +107,5 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
 });
 
+/* INIT */
 renderGallery();
