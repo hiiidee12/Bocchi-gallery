@@ -1,7 +1,7 @@
 const photos = [
-  { src: 'assets/photos/bocchi1.jpg', caption: 'Senja di pantai' },
-  { src: 'assets/photos/bocchi2.jpg', caption: 'Kopi & buku' },
-  { src: 'assets/photos/bocchi3.jpg', caption: 'Jalan-jalan sore' },
+  { src: 'assets/photos/bocchi1.jpg', caption: 'chibi bocchi' },
+  { src: 'assets/photos/bocchi2.jpg', caption: 'k-on bocchi' },
+  { src: 'assets/photos/bocchi3.jpg', caption: 'christmas bocchi' },
   // ➕ Tambahkan sesuai jumlah foto kamu
 ];
 
