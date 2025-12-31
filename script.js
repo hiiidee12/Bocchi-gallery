@@ -39,6 +39,7 @@ const closeBtn = document.querySelector('.close');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
+const footer = document.getElementById('footer');
 
 /* RENDER GALLERY (SMOOTH) */
 function renderGallery() {
@@ -105,6 +106,11 @@ lightbox.onclick = e => {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
+});
+
+/* FOOTER FADE-IN */
+window.addEventListener('load', () => {
+  if (footer) footer.classList.add('show');
 });
 
 /* INIT */
