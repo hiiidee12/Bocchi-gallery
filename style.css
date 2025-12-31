@@ -1,3 +1,5 @@
+/* style.css - Galeri Estetik dengan Background back.jpg */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,41 +7,72 @@
 }
 
 body {
-  background: #f8f9fa;
-  font-family: system-ui, sans-serif;
-  color: #222;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: white;
+
+  /* Background gambar */
+  background-image: url('assets/back.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay gelap agar teks & foto tetap terbaca */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25); /* Sesuaikan: 0.1–0.4 tergantung kecerahan back.jpg */
+  z-index: -1;
 }
 
 header {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1.5rem 1.5rem;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 header h1 {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
 }
 
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
-  padding: 0 1.5rem 2rem;
+  gap: 1.8rem;
+  padding: 0 1.5rem 2.5rem;
 }
 
 .gallery img {
   width: 100%;
-  height: 350px;
+  height: 360px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .gallery img:hover {
-  transform: scale(1.02);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
+/* Lightbox (popup saat klik foto) */
 .lightbox {
   display: none;
   position: fixed;
@@ -47,31 +80,60 @@ header h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.92);
   z-index: 1000;
   padding-top: 60px;
+  text-align: center;
 }
 
 .lightbox img {
-  display: block;
-  margin: auto;
   max-width: 90%;
-  max-height: 80%;
-  border-radius: 8px;
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .close {
   position: absolute;
   top: 20px;
   right: 35px;
-  color: white;
-  font-size: 40px;
+  color: #fff;
+  font-size: 42px;
+  font-weight: bold;
   cursor: pointer;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.2s;
+}
+
+.close:hover {
+  opacity: 0.7;
 }
 
 #caption {
-  color: white;
-  text-align: center;
   margin-top: 15px;
-  font-size: 1.1rem;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0 1rem;
+}
+
+/* Responsif untuk HP */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 0 1rem 2rem;
+  }
+
+  .gallery img {
+    height: 300px;
+  }
+
+  .close {
+    right: 20px;
+    font-size: 36px;
+  }
 }
