@@ -3,17 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Galeri Estetik</title>
+  <title>BOCCHI</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>🌸MY GALLERY🌸</h1>
+    <h1>🌸 MY GALLERY 🌸</h1>
     <p>bocchi photo collection</p>
   </header>
 
+  <!-- Gallery -->
   <main class="gallery" id="gallery"></main>
 
+  <!-- Pagination -->
+  <div class="pagination">
+    <button id="prev">←</button>
+    <span id="page-indicator"></span>
+    <button id="next">→</button>
+  </div>
+
+  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <span class="close">&times;</span>
     <img id="lightbox-img" />
