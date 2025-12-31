@@ -40,7 +40,9 @@ const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
-/* RENDER GALLERY (SMOOTH) */
+/* =========================
+   RENDER GALLERY (SMOOTH)
+   ========================= */
 function renderGallery() {
   gallery.classList.add('fade-out');
 
@@ -77,7 +79,9 @@ function renderGallery() {
   }, 200);
 }
 
-/* PAGINATION */
+/* =========================
+   PAGINATION BUTTON
+   ========================= */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
     currentPage--;
@@ -92,7 +96,9 @@ nextBtn.onclick = () => {
   }
 };
 
-/* LIGHTBOX CLOSE */
+/* =========================
+   LIGHTBOX CLOSE
+   ========================= */
 function closeLightbox() {
   lightbox.style.display = 'none';
   document.body.style.overflow = '';
@@ -106,10 +112,42 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
 });
 
-/* FOOTER FADE-IN */
+/* =========================
+   FOOTER FADE-IN
+   ========================= */
 window.addEventListener('load', () => {
   if (footer) footer.classList.add('show');
 });
+
+/* =========================
+   SWIPE (HP SLIDE)
+   ========================= */
+let touchStartX = 0;
+let touchEndX = 0;
+
+gallery.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+gallery.addEventListener('touchend', e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+  const distance = touchEndX - touchStartX;
+  const minSwipe = 60;
+
+  if (distance < -minSwipe && currentPage < Math.ceil(photos.length / photosPerPage)) {
+    currentPage++;
+    renderGallery();
+  }
+
+  if (distance > minSwipe && currentPage > 1) {
+    currentPage--;
+    renderGallery();
+  }
+}
 
 /* INIT */
 renderGallery();
