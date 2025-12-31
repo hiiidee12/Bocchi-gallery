@@ -35,7 +35,6 @@ const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const caption = document.getElementById('caption');
-const closeBtn = document.querySelector('.close');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
@@ -99,7 +98,6 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-closeBtn.onclick = closeLightbox;
 lightbox.onclick = e => {
   if (e.target === lightbox) closeLightbox();
 };
