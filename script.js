@@ -41,15 +41,11 @@ const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
-/* FARCASTER */
+/* FARCASTER (NO SPASI, NO NEWLINE) */
 function openFarcasterDraft(photoSrc) {
   const imageURL = new URL(photoSrc, window.location.origin).href;
-
-  const text = encodeURIComponent(
-    `New Bocchi PFP 🌸\n\n${imageURL}`
-  );
-
-  window.open(`https://warpcast.com/~/compose?text=${text}`, '_blank');
+  const text = encodeURIComponent("New Bocchi PFP 🌸 " + imageURL);
+  window.open("https://warpcast.com/~/compose?text=" + text, "_blank");
 }
 
 /* RENDER GALLERY */
@@ -63,7 +59,6 @@ function renderGallery() {
   currentPhotos.forEach(photo => {
     const img = document.createElement('img');
     img.src = photo.src;
-    img.loading = 'lazy';
 
     img.onclick = () => {
       activePhoto = photo.src;
@@ -81,14 +76,14 @@ function renderGallery() {
   nextBtn.disabled = currentPage === totalPages;
 }
 
-/* BUTTON POST */
+/* BUTTON FARCASTER */
 farcasterBtn.onclick = () => {
   if (activePhoto) {
     openFarcasterDraft(activePhoto);
   }
 };
 
-/* LIGHTBOX CLOSE */
+/* CLOSE LIGHTBOX */
 lightbox.onclick = e => {
   if (e.target === lightbox) {
     lightbox.style.display = 'none';
