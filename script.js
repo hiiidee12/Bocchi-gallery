@@ -43,7 +43,7 @@ const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
 /* =========================
-   FARCASTER SHARE (TETAP)
+   FARCASTER SHARE
    ========================= */
 function openFarcasterDraft(photoSrc) {
   const origin = window.location.origin;
@@ -147,22 +147,16 @@ nextBtn.onclick = () => {
 };
 
 /* =========================
-   SWIPE (HP)
+   SWIPE
    ========================= */
 let touchStartX = 0;
-let touchEndX = 0;
 
 gallery.addEventListener('touchstart', e => {
   touchStartX = e.changedTouches[0].screenX;
 }, { passive: true });
 
 gallery.addEventListener('touchend', e => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-}, { passive: true });
-
-function handleSwipe() {
-  const distance = touchEndX - touchStartX;
+  const distance = e.changedTouches[0].screenX - touchStartX;
   if (distance < -60 && currentPage < Math.ceil(photos.length / photosPerPage)) {
     currentPage++;
     renderGallery();
@@ -171,7 +165,7 @@ function handleSwipe() {
     currentPage--;
     renderGallery();
   }
-}
+}, { passive: true });
 
 /* =========================
    PREVENT IMAGE DOWNLOAD
@@ -179,7 +173,6 @@ function handleSwipe() {
 document.addEventListener('contextmenu', e => {
   if (e.target.tagName === 'IMG') e.preventDefault();
 });
-
 document.addEventListener('dragstart', e => {
   if (e.target.tagName === 'IMG') e.preventDefault();
 });
@@ -192,22 +185,14 @@ window.addEventListener('load', () => {
 });
 
 /* =========================
-   FARCASTER MINI APP READY (FINAL & BENAR)
+   FARCASTER MINI APP READY (BENAR & RESMI)
    ========================= */
-function initMiniApp() {
-  if (window.sdk?.actions?.ready) {
-    window.sdk.actions.ready();
+(function () {
+  if (window.farcaster && typeof window.farcaster.ready === "function") {
+    window.farcaster.ready();
     console.log("Farcaster Mini App READY ✅");
   }
-  renderGallery();
-}
+})();
 
-// Event resmi dari Farcaster
-document.addEventListener("farcaster:ready", initMiniApp);
-
-// Fallback (browser biasa)
-window.addEventListener("load", () => {
-  if (!window.sdk) {
-    renderGallery();
-  }
-});
+/* INIT */
+renderGallery();
