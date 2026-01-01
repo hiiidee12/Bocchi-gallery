@@ -24,7 +24,8 @@ const photos = [
   { src: 'assets/photos/bocchi23.jpg' },
   { src: 'assets/photos/bocchi24.jpg' },
   { src: 'assets/photos/bocchi25.jpg' },
-  { src: 'assets/photos/bocchi26.jpg' }
+  { src: 'assets/photos/bocchi26.jpg' },
+  { src: 'assets/photos/bocchi27.jpg' }
 ];
 
 const photosPerPage = 9;
