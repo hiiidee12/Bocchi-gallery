@@ -43,25 +43,30 @@ const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
 /* =========================
-   FARCASTER
+   FARCASTER MINI APP + FALLBACK
    ========================= */
-function openFarcasterDraft(photoSrc) {
+async function openFarcasterDraft(photoSrc) {
   const origin = window.location.origin; // TANPA slash
   const imageURL = new URL(photoSrc, origin).href;
 
-  const textLines = [
+  const text = [
     "[You must add a quote here]",
     imageURL,
     origin,
     "Follow: @bocchi ✨"
-  ];
+  ].join("\n");
 
-  const text = encodeURIComponent(textLines.join("\n"));
-
-  window.open(
-    "https://warpcast.com/~/compose?text=" + text,
-    "_blank"
-  );
+  // 🔥 Jika dibuka sebagai Farcaster Mini App
+  if (window.sdk?.actions?.postCast) {
+    await window.sdk.actions.postCast({ text });
+  } else {
+    // 🌐 Fallback (browser biasa)
+    window.open(
+      "https://warpcast.com/~/compose?text=" +
+        encodeURIComponent(text),
+      "_blank"
+    );
+  }
 }
 
 /* =========================
@@ -200,6 +205,16 @@ document.addEventListener('dragstart', e => {
    ========================= */
 window.addEventListener('load', () => {
   if (footer) footer.classList.add('show');
+});
+
+/* =========================
+   FARCASTER MINI APP READY
+   ========================= */
+document.addEventListener("DOMContentLoaded", async () => {
+  if (window.sdk?.actions?.ready) {
+    await window.sdk.actions.ready();
+    console.log("Farcaster Mini App ready ✅");
+  }
 });
 
 /* INIT */
