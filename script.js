@@ -29,10 +29,12 @@ const photos = [
 
 const photosPerPage = 9;
 let currentPage = 1;
+let activePhoto = null;
 
 const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
+const farcasterBtn = document.getElementById('farcasterBtn');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
@@ -45,39 +47,44 @@ function openFarcasterDraft(photoSrc) {
 }
 
 function renderGallery() {
-  gallery.classList.add('fade-out');
+  gallery.innerHTML = '';
 
-  setTimeout(() => {
-    gallery.innerHTML = '';
+  const start = (currentPage - 1) * photosPerPage;
+  const end = start + photosPerPage;
+  const currentPhotos = photos.slice(start, end);
 
-    const start = (currentPage - 1) * photosPerPage;
-    const end = start + photosPerPage;
-    const currentPhotos = photos.slice(start, end);
+  currentPhotos.forEach(photo => {
+    const img = document.createElement('img');
+    img.src = photo.src;
 
-    currentPhotos.forEach(photo => {
-      const img = document.createElement('img');
-      img.src = photo.src;
-      img.alt = '';
+    img.onclick = () => {
+      activePhoto = photo.src;
+      lightbox.style.display = 'block';
+      lightboxImg.src = photo.src;
+      document.body.style.overflow = 'hidden';
+    };
 
-      img.onclick = () => {
-        lightbox.style.display = 'block';
-        lightboxImg.src = photo.src;
-        document.body.style.overflow = 'hidden';
-        openFarcasterDraft(photo.src);
-      };
+    gallery.appendChild(img);
+  });
 
-      gallery.appendChild(img);
-    });
-
-    const totalPages = Math.ceil(photos.length / photosPerPage);
-    pageIndicator.textContent = `${currentPage} / ${totalPages}`;
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages;
-
-    gallery.classList.remove('fade-out');
-    gallery.classList.add('fade-in');
-  }, 200);
+  const totalPages = Math.ceil(photos.length / photosPerPage);
+  pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
 }
+
+farcasterBtn.onclick = () => {
+  if (activePhoto) {
+    openFarcasterDraft(activePhoto);
+  }
+};
+
+lightbox.onclick = e => {
+  if (e.target === lightbox) {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
 
 prevBtn.onclick = () => {
   if (currentPage > 1) {
@@ -93,36 +100,8 @@ nextBtn.onclick = () => {
   }
 };
 
-lightbox.onclick = e => {
-  if (e.target === lightbox) {
-    lightbox.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-};
-
 window.addEventListener('load', () => {
   if (footer) footer.classList.add('show');
 });
-
-let startX = 0;
-
-gallery.addEventListener('touchstart', e => {
-  startX = e.changedTouches[0].screenX;
-}, { passive: true });
-
-gallery.addEventListener('touchend', e => {
-  const endX = e.changedTouches[0].screenX;
-  const diff = endX - startX;
-
-  if (diff < -60 && currentPage < Math.ceil(photos.length / photosPerPage)) {
-    currentPage++;
-    renderGallery();
-  }
-
-  if (diff > 60 && currentPage > 1) {
-    currentPage--;
-    renderGallery();
-  }
-}, { passive: true });
 
 renderGallery();
