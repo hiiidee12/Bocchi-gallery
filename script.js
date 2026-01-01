@@ -31,6 +31,7 @@ const photosPerPage = 9;
 let currentPage = 1;
 let activePhoto = null;
 
+/* ELEMENT */
 const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -40,12 +41,18 @@ const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
+/* FARCASTER */
 function openFarcasterDraft(photoSrc) {
-  const imageURL = `${window.location.origin}/${photoSrc}`;
-  const text = encodeURIComponent(`New Bocchi PFP 🌸\n\n${imageURL}`);
+  const imageURL = new URL(photoSrc, window.location.origin).href;
+
+  const text = encodeURIComponent(
+    `New Bocchi PFP 🌸\n\n${imageURL}`
+  );
+
   window.open(`https://warpcast.com/~/compose?text=${text}`, '_blank');
 }
 
+/* RENDER GALLERY */
 function renderGallery() {
   gallery.innerHTML = '';
 
@@ -56,6 +63,7 @@ function renderGallery() {
   currentPhotos.forEach(photo => {
     const img = document.createElement('img');
     img.src = photo.src;
+    img.loading = 'lazy';
 
     img.onclick = () => {
       activePhoto = photo.src;
@@ -73,12 +81,14 @@ function renderGallery() {
   nextBtn.disabled = currentPage === totalPages;
 }
 
+/* BUTTON POST */
 farcasterBtn.onclick = () => {
   if (activePhoto) {
     openFarcasterDraft(activePhoto);
   }
 };
 
+/* LIGHTBOX CLOSE */
 lightbox.onclick = e => {
   if (e.target === lightbox) {
     lightbox.style.display = 'none';
@@ -86,6 +96,7 @@ lightbox.onclick = e => {
   }
 };
 
+/* PAGINATION */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
     currentPage--;
@@ -100,8 +111,10 @@ nextBtn.onclick = () => {
   }
 };
 
+/* FOOTER */
 window.addEventListener('load', () => {
   if (footer) footer.classList.add('show');
 });
 
+/* INIT */
 renderGallery();
