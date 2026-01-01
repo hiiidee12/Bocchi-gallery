@@ -44,8 +44,9 @@ const footer = document.getElementById('footer');
 /* FARCASTER (NO SPASI, NO NEWLINE) */
 function openFarcasterDraft(photoSrc) {
   const imageURL = new URL(photoSrc, window.location.origin).href;
-  const text = "New Bocchi PFP 🌸%0A" + imageURL + "%0AFollow: @bocchi ✨";
-  window.open("https://warpcast.com/~/compose?text=" + encodeURIComponent(text), "_blank");
+  const encodedImageURL = encodeURIComponent(imageURL);
+  const text = "New Bocchi PFP 🌸%0A" + encodedImageURL + "%0AFollow: @bocchi ✨";
+  window.open("https://warpcast.com/~/compose?text=" + text, "_blank");
 }
 
 /* RENDER GALLERY */
