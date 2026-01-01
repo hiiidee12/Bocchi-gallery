@@ -43,20 +43,20 @@ const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
 /* =========================
-   FARCASTER
+   FARCASTER SHARE (TETAP)
    ========================= */
 function openFarcasterDraft(photoSrc) {
-  const origin = window.location.origin; // tanpa slash
+  const origin = window.location.origin;
   const imageURL = new URL(photoSrc, origin).href;
 
-  const textLines = [
-    "[You must add a quote here]",
-    imageURL,
-    origin,
-    "Follow: @bocchi ✨"
-  ];
-
-  const text = encodeURIComponent(textLines.join("\n"));
+  const text = encodeURIComponent(
+    [
+      "[You must add a quote here]",
+      imageURL,
+      origin,
+      "Follow: @bocchi ✨"
+    ].join("\n")
+  );
 
   window.open(
     "https://warpcast.com/~/compose?text=" + text,
@@ -77,7 +77,7 @@ function showSkeleton() {
 }
 
 /* =========================
-   RENDER GALLERY (FADE)
+   RENDER GALLERY
    ========================= */
 function renderGallery() {
   gallery.classList.remove('fade-in');
@@ -118,16 +118,13 @@ function renderGallery() {
 }
 
 /* =========================
-   FARCASTER BUTTON
+   EVENTS
    ========================= */
 farcasterBtn.onclick = e => {
   e.stopPropagation();
   if (activePhoto) openFarcasterDraft(activePhoto);
 };
 
-/* =========================
-   CLOSE LIGHTBOX
-   ========================= */
 lightbox.onclick = e => {
   if (e.target === lightbox) {
     lightbox.style.display = 'none';
@@ -135,9 +132,6 @@ lightbox.onclick = e => {
   }
 };
 
-/* =========================
-   PAGINATION
-   ========================= */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
     currentPage--;
@@ -169,14 +163,11 @@ gallery.addEventListener('touchend', e => {
 
 function handleSwipe() {
   const distance = touchEndX - touchStartX;
-  const minSwipe = 60;
-
-  if (distance < -minSwipe && currentPage < Math.ceil(photos.length / photosPerPage)) {
+  if (distance < -60 && currentPage < Math.ceil(photos.length / photosPerPage)) {
     currentPage++;
     renderGallery();
   }
-
-  if (distance > minSwipe && currentPage > 1) {
+  if (distance > 60 && currentPage > 1) {
     currentPage--;
     renderGallery();
   }
@@ -201,20 +192,22 @@ window.addEventListener('load', () => {
 });
 
 /* =========================
-   FARCASTER MINI APP READY
+   FARCASTER MINI APP READY (FINAL & BENAR)
    ========================= */
-(function waitForFarcasterSDK() {
-  if (
-    window.sdk &&
-    window.sdk.actions &&
-    typeof window.sdk.actions.ready === "function"
-  ) {
+function initMiniApp() {
+  if (window.sdk?.actions?.ready) {
     window.sdk.actions.ready();
     console.log("Farcaster Mini App READY ✅");
-  } else {
-    setTimeout(waitForFarcasterSDK, 50);
   }
-})();
+  renderGallery();
+}
 
-/* INIT */
-renderGallery();
+// Event resmi dari Farcaster
+document.addEventListener("farcaster:ready", initMiniApp);
+
+// Fallback (browser biasa)
+window.addEventListener("load", () => {
+  if (!window.sdk) {
+    renderGallery();
+  }
+});
