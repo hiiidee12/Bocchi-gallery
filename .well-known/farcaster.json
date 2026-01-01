@@ -8,10 +8,10 @@
   "developer": {
     "name": "bocchi",
     "url": "https://bocchi-gallery.vercel.app"
-  },
-  "account_association": {
+  {
+  "accountAssociation": {
     "header": "eyJmaWQiOjI5MTA0OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDEyNjEzMjE4ODQwQzQ0MjdCODA5N2Q0MjQ5N2ZCZWQ2YzY1RUM0MDMifQ",
     "payload": "eyJkb21haW4iOiJib2NjaGktZ2FsbGVyeS52ZXJjZWwuYXBwIn0",
     "signature": "ni8zIlXDrkj95KH6qJvQJzQhfbRWvymePgckhzUSfnlrK4IPeacJ9Eke00dWdGAz6jRO3WfcdMsHy8qYt5e97hs="
   }
-}
+  } 
