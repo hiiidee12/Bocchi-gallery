@@ -145,18 +145,16 @@ header p {
 }
 
 /* =========================
-   FOOTER BIO (FINAL OPSIONAL)
+   FOOTER BIO
    ========================= */
 .footer {
   text-align: center;
   max-width: 680px;
   margin: 0 auto 2.5rem;
   padding: 1.2rem 1.5rem;
-
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px);
   border-radius: 16px;
-
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.8s ease, transform 0.8s ease;
@@ -176,7 +174,6 @@ header p {
   display: block;
   font-weight: 600;
   font-size: 1.05rem;
-  letter-spacing: 0.3px;
   margin-bottom: 0.4rem;
 }
 
@@ -197,6 +194,13 @@ header p {
   text-align: center;
 }
 
+/* container agar vertikal */
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .lightbox img {
   max-width: 90%;
   max-height: 80vh;
@@ -205,8 +209,32 @@ header p {
 }
 
 #caption {
-  margin-top: 15px;
-  font-size: 1.2rem;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+/* =========================
+   FARCASTER BUTTON
+   ========================= */
+.farcaster-btn {
+  margin-top: 14px;
+  padding: 0.55rem 1.3rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 182, 193, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.farcaster-btn:hover {
+  background: rgba(255, 182, 193, 0.85);
+  transform: translateY(-2px);
+  opacity: 0.95;
 }
 
 /* =========================
