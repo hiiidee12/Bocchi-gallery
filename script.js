@@ -114,6 +114,15 @@ function renderGallery() {
 
     gallery.classList.remove('fade-out');
     gallery.classList.add('fade-in');
+
+    // ✅ PANGGIL sdk.actions.ready() DI SINI — SETELAH SEMUA GAMBAR DIRENDER
+    if (!window._miniAppReady) {
+      if (typeof sdk !== 'undefined' && typeof sdk.actions?.ready === 'function') {
+        sdk.actions.ready();
+        console.log("✅ Farcaster Mini App ready() called");
+        window._miniAppReady = true;
+      }
+    }
   }, 300);
 }
 
@@ -183,16 +192,6 @@ document.addEventListener('dragstart', e => {
 window.addEventListener('load', () => {
   if (footer) footer.classList.add('show');
 });
-
-/* =========================
-   FARCASTER MINI APP READY (BENAR & RESMI)
-   ========================= */
-(function () {
-  if (window.farcaster && typeof window.farcaster.ready === "function") {
-    window.farcaster.ready();
-    console.log("Farcaster Mini App READY ✅");
-  }
-})();
 
 /* INIT */
 renderGallery();
