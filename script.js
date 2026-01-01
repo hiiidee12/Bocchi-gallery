@@ -90,6 +90,9 @@ function renderGallery() {
       const img = document.createElement('img');
       img.src = photo.src;
 
+      // ⛔ drag
+      img.draggable = false;
+
       img.onclick = () => {
         activePhoto = photo.src;
         lightbox.style.display = 'block';
@@ -176,6 +179,24 @@ function handleSwipe() {
     renderGallery();
   }
 }
+
+/* =========================
+   PREVENT IMAGE DOWNLOAD
+   ========================= */
+
+// Disable right click (Save Image)
+document.addEventListener('contextmenu', e => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
+
+// Disable drag image to desktop
+document.addEventListener('dragstart', e => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
 
 /* =========================
    FOOTER
