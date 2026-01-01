@@ -41,11 +41,13 @@ const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
-/* FARCASTER (NO SPASI, NO NEWLINE) */
+/* FARCASTER — HANYA DARI TOMBOL */
 function openFarcasterDraft(photoSrc) {
-  const imageURL = new URL(photoSrc, window.location.origin).href;
-  const text = encodeURIComponent("New Bocchi PFP 🌸 " + imageURL);
-  window.open("https://warpcast.com/~/compose?text=" + text, "_blank");
+  const imageURL = new URL(photoSrc, window.location.origin).href.trim();
+  const text = encodeURIComponent(
+    `New Bocchi PFP 🌸 ${imageURL} Follow: @bocchi ✨`
+  );
+  window.open(`https://warpcast.com/~/compose?text=${text}`, '_blank');
 }
 
 /* RENDER GALLERY */
@@ -60,6 +62,7 @@ function renderGallery() {
     const img = document.createElement('img');
     img.src = photo.src;
 
+    // ⛔ TIDAK ADA FARCASTER DI SINI
     img.onclick = () => {
       activePhoto = photo.src;
       lightbox.style.display = 'block';
@@ -76,8 +79,9 @@ function renderGallery() {
   nextBtn.disabled = currentPage === totalPages;
 }
 
-/* BUTTON FARCASTER */
-farcasterBtn.onclick = () => {
+/* TOMBOL FARCASTER (SATU-SATUNYA) */
+farcasterBtn.onclick = e => {
+  e.stopPropagation(); // ⬅️ PENTING: cegah klik nembus ke gambar
   if (activePhoto) {
     openFarcasterDraft(activePhoto);
   }
