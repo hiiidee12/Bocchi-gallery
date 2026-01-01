@@ -30,7 +30,9 @@ const photos = [
 const photosPerPage = 9;
 let currentPage = 1;
 
-/* ELEMENT */
+/* =========================
+   ELEMENT
+   ========================= */
 const gallery = document.getElementById('gallery');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -39,6 +41,18 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
+const farcasterBtn = document.getElementById('farcasterBtn');
+
+/* =========================
+   FARCASTER DRAFT
+   ========================= */
+function openFarcasterDraft(imageUrl) {
+  const text = encodeURIComponent(
+    `New Bocchi PFP 🌸\n\n${imageUrl}`
+  );
+  const url = `https://warpcast.com/~/compose?text=${text}`;
+  window.open(url, '_blank');
+}
 
 /* =========================
    RENDER GALLERY (SMOOTH)
@@ -63,6 +77,12 @@ function renderGallery() {
         lightboxImg.src = photo.src;
         caption.textContent = '';
         document.body.style.overflow = 'hidden';
+
+        if (farcasterBtn) {
+          farcasterBtn.onclick = () => {
+            openFarcasterDraft(photo.src);
+          };
+        }
       };
 
       gallery.appendChild(img);
@@ -80,7 +100,7 @@ function renderGallery() {
 }
 
 /* =========================
-   PAGINATION BUTTON
+   PAGINATION
    ========================= */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
