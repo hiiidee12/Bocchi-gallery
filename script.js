@@ -49,7 +49,7 @@ function openFarcasterDraft(photoSrc) {
   const origin = window.location.origin;
   const imageURL = new URL(photoSrc, origin).href;
 
-  // ⬇️ ORIGIN SUDAH DIHAPUS DARI TEXT
+  // 
   const textLines = [
     "[You must add a quote here]",
     imageURL
