@@ -44,18 +44,22 @@ const footer = document.getElementById('footer');
 const farcasterBtn = document.getElementById('farcasterBtn');
 
 /* =========================
-   FARCASTER DRAFT
+   FARCASTER DRAFT (FIXED)
    ========================= */
-function openFarcasterDraft(imageUrl) {
+function openFarcasterDraft(relativePath) {
+  const baseURL = window.location.origin;
+  const imageURL = `${baseURL}/${relativePath}`;
+
   const text = encodeURIComponent(
-    `New Bocchi PFP 🌸\n\n${imageUrl}`
+    `New Bocchi PFP 🌸\n\n${imageURL}`
   );
+
   const url = `https://warpcast.com/~/compose?text=${text}`;
   window.open(url, '_blank');
 }
 
 /* =========================
-   RENDER GALLERY (SMOOTH)
+   RENDER GALLERY
    ========================= */
 function renderGallery() {
   gallery.classList.add('fade-out');
@@ -140,7 +144,7 @@ window.addEventListener('load', () => {
 });
 
 /* =========================
-   SWIPE (HP SLIDE)
+   SWIPE (HP)
    ========================= */
 let touchStartX = 0;
 let touchEndX = 0;
