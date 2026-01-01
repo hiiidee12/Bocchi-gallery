@@ -8,74 +8,89 @@
   <title>BOCCHI – My Gallery</title>
 
   <!-- BASIC SEO -->
-  <meta name="description" content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!" />
+  <meta
+    name="description"
+    content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!"
+  />
 
-  <!-- 🔥 OPEN GRAPH -->
+  <!-- OPEN GRAPH -->
   <meta property="og:title" content="BOCCHI – My Gallery" />
-  <meta property="og:description" content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!" />
-  <meta property="og:image" content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg" />
+  <meta
+    property="og:description"
+    content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!"
+  />
+  <meta
+    property="og:image"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
   <meta property="og:url" content="https://bocchi-gallery.vercel.app/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BOCCHI Gallery" />
 
-  <!-- 🐦 TWITTER CARD -->
+  <!-- TWITTER CARD -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="BOCCHI – My Gallery" />
-  <meta name="twitter:description" content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!" />
-  <meta name="twitter:image" content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg" />
+  <meta
+    name="twitter:description"
+    content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!"
+  />
+  <meta
+    name="twitter:image"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
 
-  <!-- 🎯 FARCASTER FRAME -->
+  <!-- FARCASTER FRAME -->
   <meta name="fc:frame" content="vNext" />
-  <meta name="fc:frame:image" content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg" />
-  <meta name="fc:frame:button:1" content="Post to Farcaster" />
+  <meta
+    name="fc:frame:image"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
+  <meta name="fc:frame:button:1" content="Open Gallery" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+  <!-- HEADER -->
   <header>
     <h1>🌸 MY GALLERY 🌸</h1>
     <p>bocchi photo collection</p>
   </header>
 
-  <!-- Gallery -->
+  <!-- GALLERY -->
   <main class="gallery" id="gallery"></main>
 
-  <!-- Pagination -->
+  <!-- PAGINATION -->
   <div class="pagination">
-    <button id="prev">⬅️</button>
+    <button id="prev" aria-label="Previous page">⬅️</button>
     <span id="page-indicator"></span>
-    <button id="next">➡️</button>
+    <button id="next" aria-label="Next page">➡️</button>
   </div>
 
-  <!-- Footer Bio -->
+  <!-- FOOTER -->
   <footer class="footer" id="footer">
-    <p>
-      <strong>Hitori Gotoh</strong>
-      <span>
-        Hitori Gotoh is a character from the anime Bocchi the Rock!.<br>
-        She is a shy and socially anxious high school girl<br>
-        who dreams of becoming a successful guitarist.<br>
-        Through music and friendship, she slowly learns to face the world.
-      </span>
-    </p>
-
-    <!-- ✨ -->
-    <small class="footer-note">For fun &amp; learning 🎸</small>
+    <strong>Hitori Gotoh</strong>
+    <span>
+      Hitori Gotoh is a fictional character from the anime <em>Bocchi the Rock!</em><br>
+      She is a shy and socially anxious high school girl<br>
+      who dreams of becoming a successful guitarist.<br>
+      Through music and friendship, she slowly learns to face the world.
+    </span>
+    <em>For fun & learning 🎸</em>
   </footer>
 
-  <!-- Lightbox -->
+  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-content">
-      <img id="lightbox-img" />
+      <img id="lightbox-img" alt="Preview image" />
       <button class="farcaster-btn" id="farcasterBtn">
         Post to Farcaster
       </button>
-      <div id="caption"></div>
     </div>
   </div>
 
+  <!-- SCRIPT -->
   <script src="script.js"></script>
 </body>
 </html>
