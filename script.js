@@ -41,50 +41,88 @@ const nextBtn = document.getElementById('next');
 const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
-/* FARCASTER */
+/* =========================
+   FARCASTER 
+   ========================= */
 function openFarcasterDraft(photoSrc) {
   const imageURL = new URL(photoSrc, window.location.origin).href;
   const encodedImageURL = encodeURIComponent(imageURL);
-  const text = "[You must add a quote here]%0A" + encodedImageURL + "%0AFollow: @bocchi ✨";
-  window.open("https://warpcast.com/~/compose?text=" + text, "_blank");
+  const text =
+    "[You must add a quote here]%0A" +
+    encodedImageURL +
+    "%0AFollow: @bocchi ✨";
+
+  window.open(
+    "https://warpcast.com/~/compose?text=" + text,
+    "_blank"
+  );
 }
 
-/* RENDER GALLERY */
-function renderGallery() {
+/* =========================
+   SKELETON LOADING
+   ========================= */
+function showSkeleton() {
   gallery.innerHTML = '';
-
-  const start = (currentPage - 1) * photosPerPage;
-  const end = start + photosPerPage;
-  const currentPhotos = photos.slice(start, end);
-
-  currentPhotos.forEach(photo => {
-    const img = document.createElement('img');
-    img.src = photo.src;
-
-    img.onclick = () => {
-      activePhoto = photo.src;
-      lightbox.style.display = 'block';
-      lightboxImg.src = photo.src;
-      document.body.style.overflow = 'hidden';
-    };
-
-    gallery.appendChild(img);
-  });
-
-  const totalPages = Math.ceil(photos.length / photosPerPage);
-  pageIndicator.textContent = `${currentPage} / ${totalPages}`;
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
+  for (let i = 0; i < photosPerPage; i++) {
+    const skel = document.createElement('div');
+    skel.className = 'skeleton';
+    gallery.appendChild(skel);
+  }
 }
 
-/* BUTTON FARCASTER */
-farcasterBtn.onclick = () => {
+/* =========================
+   RENDER GALLERY (FADE)
+   ========================= */
+function renderGallery() {
+  gallery.classList.remove('fade-in');
+  gallery.classList.add('fade-out');
+
+  showSkeleton();
+
+  setTimeout(() => {
+    gallery.innerHTML = '';
+
+    const start = (currentPage - 1) * photosPerPage;
+    const end = start + photosPerPage;
+    const currentPhotos = photos.slice(start, end);
+
+    currentPhotos.forEach(photo => {
+      const img = document.createElement('img');
+      img.src = photo.src;
+
+      img.onclick = () => {
+        activePhoto = photo.src;
+        lightbox.style.display = 'block';
+        lightboxImg.src = photo.src;
+        document.body.style.overflow = 'hidden';
+      };
+
+      gallery.appendChild(img);
+    });
+
+    const totalPages = Math.ceil(photos.length / photosPerPage);
+    pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+
+    gallery.classList.remove('fade-out');
+    gallery.classList.add('fade-in');
+  }, 300);
+}
+
+/* =========================
+   FARCASTER BUTTON
+   ========================= */
+farcasterBtn.onclick = e => {
+  e.stopPropagation();
   if (activePhoto) {
     openFarcasterDraft(activePhoto);
   }
 };
 
-/* CLOSE LIGHTBOX */
+/* =========================
+   CLOSE LIGHTBOX
+   ========================= */
 lightbox.onclick = e => {
   if (e.target === lightbox) {
     lightbox.style.display = 'none';
@@ -92,7 +130,9 @@ lightbox.onclick = e => {
   }
 };
 
-/* PAGINATION */
+/* =========================
+   PAGINATION BUTTON
+   ========================= */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
     currentPage--;
@@ -107,7 +147,39 @@ nextBtn.onclick = () => {
   }
 };
 
-/* FOOTER */
+/* =========================
+   SWIPE (HP)
+   ========================= */
+let touchStartX = 0;
+let touchEndX = 0;
+
+gallery.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+gallery.addEventListener('touchend', e => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+  const distance = touchEndX - touchStartX;
+  const minSwipe = 60;
+
+  if (distance < -minSwipe && currentPage < Math.ceil(photos.length / photosPerPage)) {
+    currentPage++;
+    renderGallery();
+  }
+
+  if (distance > minSwipe && currentPage > 1) {
+    currentPage--;
+    renderGallery();
+  }
+}
+
+/* =========================
+   FOOTER
+   ========================= */
 window.addEventListener('load', () => {
   if (footer) footer.classList.add('show');
 });
