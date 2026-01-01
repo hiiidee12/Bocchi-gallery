@@ -44,14 +44,20 @@ const footer = document.getElementById('footer');
 const farcasterBtn = document.getElementById('farcasterBtn');
 
 /* =========================
-   FARCASTER DRAFT (FIXED)
+   FARCASTER DRAFT (FRAME READY)
    ========================= */
-function openFarcasterDraft(relativePath) {
+function openFarcasterDraft(photoSrc) {
   const baseURL = window.location.origin;
-  const imageURL = `${baseURL}/${relativePath}`;
+
+  // ⬇️ INI YANG PENTING
+  // kirim HALAMAN HTML, bukan file JPG
+  const photoPageURL =
+    `${baseURL}/photo.html?img=${encodeURIComponent(
+      `${baseURL}/${photoSrc}`
+    )}`;
 
   const text = encodeURIComponent(
-    `New Bocchi PFP 🌸\n\n${imageURL}`
+    `New Bocchi PFP 🌸\n\n${photoPageURL}`
   );
 
   const url = `https://warpcast.com/~/compose?text=${text}`;
