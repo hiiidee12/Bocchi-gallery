@@ -43,30 +43,25 @@ const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
 /* =========================
-   FARCASTER MINI APP + FALLBACK
+   FARCASTER
    ========================= */
-async function openFarcasterDraft(photoSrc) {
-  const origin = window.location.origin; // TANPA slash
+function openFarcasterDraft(photoSrc) {
+  const origin = window.location.origin; // tanpa slash
   const imageURL = new URL(photoSrc, origin).href;
 
-  const text = [
+  const textLines = [
     "[You must add a quote here]",
     imageURL,
     origin,
     "Follow: @bocchi ✨"
-  ].join("\n");
+  ];
 
-  // 🔥 Jika dibuka sebagai Farcaster Mini App
-  if (window.sdk?.actions?.postCast) {
-    await window.sdk.actions.postCast({ text });
-  } else {
-    // 🌐 Fallback (browser biasa)
-    window.open(
-      "https://warpcast.com/~/compose?text=" +
-        encodeURIComponent(text),
-      "_blank"
-    );
-  }
+  const text = encodeURIComponent(textLines.join("\n"));
+
+  window.open(
+    "https://warpcast.com/~/compose?text=" + text,
+    "_blank"
+  );
 }
 
 /* =========================
@@ -127,9 +122,7 @@ function renderGallery() {
    ========================= */
 farcasterBtn.onclick = e => {
   e.stopPropagation();
-  if (activePhoto) {
-    openFarcasterDraft(activePhoto);
-  }
+  if (activePhoto) openFarcasterDraft(activePhoto);
 };
 
 /* =========================
@@ -210,12 +203,18 @@ window.addEventListener('load', () => {
 /* =========================
    FARCASTER MINI APP READY
    ========================= */
-document.addEventListener("DOMContentLoaded", async () => {
-  if (window.sdk?.actions?.ready) {
-    await window.sdk.actions.ready();
-    console.log("Farcaster Mini App ready ✅");
+(function waitForFarcasterSDK() {
+  if (
+    window.sdk &&
+    window.sdk.actions &&
+    typeof window.sdk.actions.ready === "function"
+  ) {
+    window.sdk.actions.ready();
+    console.log("Farcaster Mini App READY ✅");
+  } else {
+    setTimeout(waitForFarcasterSDK, 50);
   }
-});
+})();
 
 /* INIT */
 renderGallery();
