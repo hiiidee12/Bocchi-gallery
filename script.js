@@ -42,15 +42,20 @@ const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
 /* =========================
-   FARCASTER 
+   FARCASTER
    ========================= */
 function openFarcasterDraft(photoSrc) {
-  const imageURL = new URL(photoSrc, window.location.origin).href;
-  const encodedImageURL = encodeURIComponent(imageURL);
-  const text =
-    "[You must add a quote here]%0A" +
-    encodedImageURL +
-    "%0AFollow: @bocchi ✨"+"%0Ahttps://bocchi-gallery.vercel.app/";
+  const origin = window.location.origin;
+  const imageURL = new URL(photoSrc, origin).href;
+
+  const textLines = [
+    "[You must add a quote here]",
+    imageURL,
+    origin + "/",
+    "Follow: @bocchi ✨"
+  ];
+
+  const text = encodeURIComponent(textLines.join("\n"));
 
   window.open(
     "https://warpcast.com/~/compose?text=" + text,
@@ -89,8 +94,6 @@ function renderGallery() {
     currentPhotos.forEach(photo => {
       const img = document.createElement('img');
       img.src = photo.src;
-
-      // ⛔ drag
       img.draggable = false;
 
       img.onclick = () => {
@@ -134,7 +137,7 @@ lightbox.onclick = e => {
 };
 
 /* =========================
-   PAGINATION BUTTON
+   PAGINATION
    ========================= */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
@@ -183,19 +186,12 @@ function handleSwipe() {
 /* =========================
    PREVENT IMAGE DOWNLOAD
    ========================= */
-
-// Disable right click (Save Image)
 document.addEventListener('contextmenu', e => {
-  if (e.target.tagName === 'IMG') {
-    e.preventDefault();
-  }
+  if (e.target.tagName === 'IMG') e.preventDefault();
 });
 
-// Disable drag image to desktop
 document.addEventListener('dragstart', e => {
-  if (e.target.tagName === 'IMG') {
-    e.preventDefault();
-  }
+  if (e.target.tagName === 'IMG') e.preventDefault();
 });
 
 /* =========================
@@ -207,4 +203,3 @@ window.addEventListener('load', () => {
 
 /* INIT */
 renderGallery();
-
