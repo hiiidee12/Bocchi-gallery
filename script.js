@@ -50,7 +50,7 @@ function openFarcasterDraft(photoSrc) {
   const text =
     "[You must add a quote here]%0A" +
     encodedImageURL +
-    "%0AFollow: @bocchi ✨";
+    "%0AFollow: @bocchi ✨"+"%0Ahttps://bocchi-gallery.vercel.app/";
 
   window.open(
     "https://warpcast.com/~/compose?text=" + text,
@@ -207,3 +207,4 @@ window.addEventListener('load', () => {
 
 /* INIT */
 renderGallery();
+
