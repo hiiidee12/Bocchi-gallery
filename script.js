@@ -46,13 +46,13 @@ const footer = document.getElementById('footer');
    FARCASTER
    ========================= */
 function openFarcasterDraft(photoSrc) {
-  const origin = window.location.origin;
+  const origin = window.location.origin; // TANPA slash
   const imageURL = new URL(photoSrc, origin).href;
 
   const textLines = [
     "[You must add a quote here]",
     imageURL,
-    origin + "/",
+    origin,
     "Follow: @bocchi ✨"
   ];
 
