@@ -6,7 +6,12 @@
   "embed_url": "https://bocchi-gallery.vercel.app",
   "description": "Bocchi photo collection – gallery of Hitori Gotoh",
   "developer": {
-    "name": "bocchi",
+    "name": "hiidee",
     "url": "https://bocchi-gallery.vercel.app"
+  },
+  "account_association": {
+    "header": "eyJmaWQiOjI2NjQ5OCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDIxNDhBYjVGZTFCNzY3MjM4YTdhOUNBNjg3YkE1QWExNGFkN0VBMDMifQ",
+    "payload": "eyJkb21haW4iOiJib2NjaGktZ2FsbGVyeS52ZXJjZWwuYXBwIn0",
+    "signature": "xl14esaaz64maWMPsHJPWL3r52uO0n3bbVQ57SeBSKM5gn2zyejPStLfMaz5nX+XoC6vvaorNAhvW37nhpN9QBs="
   }
 }
