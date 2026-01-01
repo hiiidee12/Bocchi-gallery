@@ -43,20 +43,20 @@ const pageIndicator = document.getElementById('page-indicator');
 const footer = document.getElementById('footer');
 
 /* =========================
-   FARCASTER SHARE
+   FARCASTER
    ========================= */
 function openFarcasterDraft(photoSrc) {
-  const origin = window.location.origin;
+  const origin = window.location.origin; // TANPA slash
   const imageURL = new URL(photoSrc, origin).href;
 
-  const text = encodeURIComponent(
-    [
-      "[You must add a quote here]",
-      imageURL,
-      origin,
-      "Follow: @bocchi ✨"
-    ].join("\n")
-  );
+  const textLines = [
+    "[You must add a quote here]",
+    imageURL,
+    origin,
+    "Follow: @bocchi ✨"
+  ];
+
+  const text = encodeURIComponent(textLines.join("\n"));
 
   window.open(
     "https://warpcast.com/~/compose?text=" + text,
@@ -77,7 +77,7 @@ function showSkeleton() {
 }
 
 /* =========================
-   RENDER GALLERY
+   RENDER GALLERY (FADE)
    ========================= */
 function renderGallery() {
   gallery.classList.remove('fade-in');
@@ -114,26 +114,22 @@ function renderGallery() {
 
     gallery.classList.remove('fade-out');
     gallery.classList.add('fade-in');
-
-    // ✅ PANGGIL sdk.actions.ready() DI SINI — SETELAH SEMUA GAMBAR DIRENDER
-    if (!window._miniAppReady) {
-      if (typeof sdk !== 'undefined' && typeof sdk.actions?.ready === 'function') {
-        sdk.actions.ready();
-        console.log("✅ Farcaster Mini App ready() called");
-        window._miniAppReady = true;
-      }
-    }
   }, 300);
 }
 
 /* =========================
-   EVENTS
+   FARCASTER BUTTON
    ========================= */
 farcasterBtn.onclick = e => {
   e.stopPropagation();
-  if (activePhoto) openFarcasterDraft(activePhoto);
+  if (activePhoto) {
+    openFarcasterDraft(activePhoto);
+  }
 };
 
+/* =========================
+   CLOSE LIGHTBOX
+   ========================= */
 lightbox.onclick = e => {
   if (e.target === lightbox) {
     lightbox.style.display = 'none';
@@ -141,6 +137,9 @@ lightbox.onclick = e => {
   }
 };
 
+/* =========================
+   PAGINATION
+   ========================= */
 prevBtn.onclick = () => {
   if (currentPage > 1) {
     currentPage--;
@@ -156,25 +155,34 @@ nextBtn.onclick = () => {
 };
 
 /* =========================
-   SWIPE
+   SWIPE (HP)
    ========================= */
 let touchStartX = 0;
+let touchEndX = 0;
 
 gallery.addEventListener('touchstart', e => {
   touchStartX = e.changedTouches[0].screenX;
 }, { passive: true });
 
 gallery.addEventListener('touchend', e => {
-  const distance = e.changedTouches[0].screenX - touchStartX;
-  if (distance < -60 && currentPage < Math.ceil(photos.length / photosPerPage)) {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+  const distance = touchEndX - touchStartX;
+  const minSwipe = 60;
+
+  if (distance < -minSwipe && currentPage < Math.ceil(photos.length / photosPerPage)) {
     currentPage++;
     renderGallery();
   }
-  if (distance > 60 && currentPage > 1) {
+
+  if (distance > minSwipe && currentPage > 1) {
     currentPage--;
     renderGallery();
   }
-}, { passive: true });
+}
 
 /* =========================
    PREVENT IMAGE DOWNLOAD
@@ -182,6 +190,7 @@ gallery.addEventListener('touchend', e => {
 document.addEventListener('contextmenu', e => {
   if (e.target.tagName === 'IMG') e.preventDefault();
 });
+
 document.addEventListener('dragstart', e => {
   if (e.target.tagName === 'IMG') e.preventDefault();
 });
