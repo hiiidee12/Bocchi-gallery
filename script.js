@@ -45,7 +45,7 @@ const footer = document.getElementById('footer');
 function openFarcasterDraft(photoSrc) {
   const imageURL = new URL(photoSrc, window.location.origin).href;
   const encodedImageURL = encodeURIComponent(imageURL);
-  const text = "New Bocchi PFP 🌸%0A" + encodedImageURL + "%0AFollow: @bocchi ✨";
+  const text = "[add your quote here]%0A" + encodedImageURL + "%0AFollow: @bocchi ✨";
   window.open("https://warpcast.com/~/compose?text=" + text, "_blank");
 }
 
