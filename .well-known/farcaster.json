@@ -10,8 +10,8 @@
     "url": "https://bocchi-gallery.vercel.app"
   },
   "account_association": {
-    "header": "eyJmaWQiOjI2NjQ5OCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDIxNDhBYjVGZTFCNzY3MjM4YTdhOUNBNjg3YkE1QWExNGFkN0VBMDMifQ",
+    "header": "eyJmaWQiOjI5MTA0OSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDEyNjEzMjE4ODQwQzQ0MjdCODA5N2Q0MjQ5N2ZCZWQ2YzY1RUM0MDMifQ",
     "payload": "eyJkb21haW4iOiJib2NjaGktZ2FsbGVyeS52ZXJjZWwuYXBwIn0",
-    "signature": "xl14esaaz64maWMPsHJPWL3r52uO0n3bbVQ57SeBSKM5gn2zyejPStLfMaz5nX+XoC6vvaorNAhvW37nhpN9QBs="
+    "signature": "ni8zIlXDrkj95KH6qJvQJzQhfbRWvymePgckhzUSfnlrK4IPeacJ9Eke00dWdGAz6jRO3WfcdMsHy8qYt5e97hs="
   }
 }
