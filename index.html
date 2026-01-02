@@ -4,96 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Welcome | Bocchi Gallery</title>
+
+  <!-- CSS UTAMA -->
   <link rel="stylesheet" href="style.css">
 
+  <!-- STYLE KHUSUS KONTEN WELCOME (TIDAK SENTUH BODY) -->
   <style>
-    /* WELCOME PAGE STYLE (inline biar simple) */
-    body {
-      margin: 0;
+    .welcome-wrapper {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(to bottom, #f5b7c7, #d98cb3);
-      font-family: system-ui, sans-serif;
-    }
-
-    .welcome-container {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 2rem 2.5rem;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      animation: fadeIn 1s ease;
-    }
-
-    h1 {
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      color: #555;
-    }
-
-    .enter-btn {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 12px 26px;
-      background: #ff6fae;
-      color: white;
-      text-decoration: none;
-      border-radius: 999px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .enter-btn:hover {
-      background: #ff4f9a;
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-<body>
 
-  <div class="welcome-container">
-    <h1>🌸 Welcome to My Gallery 🌸</h1>
-    <p>Bocchi photo collection</p>
+<body class="welcome">
 
-    <a href="gallery.html" class="enter-btn">
-      Enter Gallery →
-    </a>
+  <div class="welcome-wrapper">
+    <div class="welcome-container">
+      <h1>🌸 Welcome to My Gallery 🌸</h1>
+      <p>Bocchi photo collection</p>
+
+      <a href="gallery.html" class="enter-btn" id="enterGallery">
+        Enter Gallery →
+      </a>
+    </div>
   </div>
 
   <script>
-    /* ===== OPSIONAL SETTINGS ===== */
+    /* =========================
+       SETTINGS
+       ========================= */
+    const AUTO_REDIRECT = true;
+    const REDIRECT_DELAY = 13000; // 13 detik
+    const ONE_TIME_ONLY = true;
 
-    const AUTO_REDIRECT = true; // true / false
-    const REDIRECT_DELAY = 13000; // ms (13000 = 13 detik)
-    const ONE_TIME_ONLY = true; // true = welcome muncul sekali
-
-    /* ============================= */
+    /* ========================= */
 
     const visited = localStorage.getItem("visited_gallery");
+    const enterBtn = document.getElementById("enterGallery");
 
+    /* jika sudah pernah masuk */
     if (ONE_TIME_ONLY && visited) {
       window.location.href = "gallery.html";
     }
 
-    if (AUTO_REDIRECT) {
+    /* fungsi buka buku + redirect */
+    function goToGallery(url) {
+      document.body.classList.add("book-open");
+      localStorage.setItem("visited_gallery", "true");
+
       setTimeout(() => {
-        localStorage.setItem("visited_gallery", "true");
-        window.location.href = "gallery.html";
-      }, REDIRECT_DELAY);
+        window.location.href = url;
+      }, 2000); // HARUS sama dengan durasi CSS
     }
 
-    document.querySelector(".enter-btn").addEventListener("click", () => {
-      localStorage.setItem("visited_gallery", "true");
+    /* klik tombol */
+    enterBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      goToGallery(this.href);
     });
+
+    /* auto redirect */
+    if (AUTO_REDIRECT) {
+      setTimeout(() => {
+        goToGallery("gallery.html");
+      }, REDIRECT_DELAY);
+    }
   </script>
 
 </body>
