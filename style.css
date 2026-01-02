@@ -108,7 +108,7 @@ header p {
 }
 
 /* =========================
-   PAGINATION (⬅️ ➡️)
+   PAGINATION
    ========================= */
 .pagination {
   display: flex;
@@ -139,11 +139,6 @@ header p {
   transform: none;
 }
 
-#page-indicator {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
 /* =========================
    FOOTER BIO
    ========================= */
@@ -163,22 +158,6 @@ header p {
 .footer.show {
   opacity: 0.92;
   transform: translateY(0);
-}
-
-.footer p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.footer strong {
-  display: block;
-  font-weight: 600;
-  font-size: 1.05rem;
-  margin-bottom: 0.4rem;
-}
-
-.footer span {
-  font-style: italic;
 }
 
 /* =========================
@@ -237,33 +216,18 @@ header p {
 }
 
 /* =========================
-   RESPONSIVE (HP)
+   RESPONSIVE
    ========================= */
 @media (max-width: 600px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  .gallery {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    padding: 0 1rem 1.5rem;
-  }
-
+  header h1 { font-size: 2rem; }
+  .gallery { grid-template-columns: 1fr; }
   .gallery img,
-  .skeleton {
-    height: 300px;
-  }
-
-  .footer p {
-    font-size: 0.85rem;
-  }
+  .skeleton { height: 300px; }
 }
 
-/* ======================================================
+/* =========================
    WELCOME PAGE
-   ====================================================== */
-
+   ========================= */
 body.welcome::before {
   background: rgba(0, 0, 0, 0.35);
 }
@@ -280,56 +244,41 @@ body.welcome::before {
   max-width: 90%;
 }
 
-.welcome-container h1 {
-  font-size: 2.2rem;
-  margin-bottom: 0.6rem;
-}
-
-.welcome-container p {
-  font-size: 1.05rem;
-  opacity: 0.8;
-}
-
-.enter-btn {
-  display: inline-block;
-  margin-top: 1.6rem;
-  padding: 0.65rem 1.9rem;
-  background: rgba(255, 111, 174, 0.9);
-  color: white;
-  text-decoration: none;
-  border-radius: 999px;
-  font-weight: 600;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-  box-shadow: 0 8px 20px rgba(255, 182, 193, 0.35);
-}
-
-.enter-btn:hover {
-  background: rgba(255, 79, 154, 0.95);
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 12px 28px rgba(255, 182, 193, 0.45);
-}
-
 @keyframes welcomeFade {
   from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ======================================================
-   BOOK OPEN + REALISTIC PAGE FOLD
-   ====================================================== */
+/* =========================
+   BOOK OPEN EFFECT (SAFE)
+   ========================= */
+html { perspective: 1600px; }
 
-html {
-  perspective: 1600px;
+/* non-welcome reset */
+body:not(.welcome) {
+  transform: none !important;
+  opacity: 1 !important;
 }
 
-body {
+body:not(.welcome)::before,
+body:not(.welcome)::after {
+  background: rgba(0,0,0,0.25) !important;
+  opacity: 1 !important;
+}
+
+/* welcome only */
+body.welcome {
   transform-origin: left center;
   transform-style: preserve-3d;
   transition: transform 2s ease-in-out, opacity 2s ease;
 }
 
-/* spine buku */
-body::after {
+body.welcome.book-open {
+  transform: rotateY(-105deg);
+  opacity: 0.15;
+}
+
+body.welcome::after {
   content: "";
   position: fixed;
   top: 0;
@@ -348,17 +297,9 @@ body::after {
   transition: opacity 2s ease;
 }
 
-body.book-open {
-  transform: rotateY(-105deg);
-  opacity: 0.15;
-  box-shadow: -40px 0 70px rgba(0,0,0,0.6);
-}
+body.welcome.book-open::after { opacity: 1; }
 
-body.book-open::after {
-  opacity: 1;
-}
-
-body.book-open::before {
+body.welcome.book-open::before {
   background: linear-gradient(
     to right,
     rgba(255,255,255,0.2),
