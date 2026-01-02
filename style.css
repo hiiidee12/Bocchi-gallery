@@ -18,6 +18,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  display: block; /* FIX: body tidak boleh flex */
 }
 
 /* Overlay agar teks & foto terbaca */
@@ -139,18 +140,13 @@ header p {
   transform: none;
 }
 
-#page-indicator {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
 /* =========================
    FOOTER BIO
    ========================= */
 .footer {
   text-align: center;
   max-width: 680px;
-  margin: 0 auto 2.5rem;
+  margin: 2rem auto 2.5rem;
   padding: 1.2rem 1.5rem;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px);
@@ -224,48 +220,31 @@ header p {
    RESPONSIVE (HP)
    ========================= */
 @media (max-width: 600px) {
-  header h1 {
-    font-size: 2rem;
-  }
-
-  .gallery {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    padding: 0 1rem 1.5rem;
-  }
-
-  .gallery img,
-  .skeleton {
-    height: 300px;
-  }
-
-  .footer p {
-    font-size: 0.85rem;
-  }
+  header h1 { font-size: 2rem; }
+  .gallery { grid-template-columns: 1fr; }
+  .gallery img, .skeleton { height: 300px; }
+  .footer p { font-size: 0.85rem; }
 }
 
 /* ======================================================
-   WELCOME PAGE (DITAMBAHKAN — TANPA HAPUS APA PUN)
+   WELCOME PAGE (FIXED & RESPONSIVE)
    ====================================================== */
-
-body.welcome {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 body.welcome::before {
   background: rgba(0, 0, 0, 0.35);
 }
 
 .welcome-wrapper {
-  min-height: 100vh;
+  min-height: 100svh; /* FIX mobile viewport */
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1.5rem;
 }
 
 .welcome-container {
+  width: 100%;
+  max-width: 420px;
   background: rgba(255, 255, 255, 0.85);
   color: #333;
   padding: 2.2rem 2.6rem;
@@ -274,12 +253,12 @@ body.welcome::before {
   box-shadow: 0 12px 30px rgba(0,0,0,0.2);
   backdrop-filter: blur(6px);
   animation: welcomeFade 1s ease forwards;
-  max-width: 90%;
 }
 
 .welcome-container h1 {
   font-size: 2.2rem;
   margin-bottom: 0.6rem;
+  line-height: 1.25;
 }
 
 .welcome-container p {
@@ -296,9 +275,7 @@ body.welcome::before {
   text-decoration: none;
   border-radius: 999px;
   font-weight: 600;
-  transition: transform 0.25s ease,
-              box-shadow 0.25s ease,
-              background 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   box-shadow: 0 8px 20px rgba(255, 182, 193, 0.35);
 }
 
@@ -309,22 +286,11 @@ body.welcome::before {
 }
 
 @keyframes welcomeFade {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 600px) {
-  .welcome-container h1 {
-    font-size: 1.8rem;
-  }
-
-  .welcome-container p {
-    font-size: 0.95rem;
-  }
+  .welcome-container h1 { font-size: 1.8rem; }
+  .welcome-container p { font-size: 0.95rem; }
 }
