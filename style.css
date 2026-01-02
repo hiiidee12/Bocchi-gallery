@@ -194,7 +194,6 @@ header p {
   text-align: center;
 }
 
-/* container agar vertikal */
 .lightbox-content {
   display: flex;
   flex-direction: column;
@@ -262,7 +261,7 @@ header p {
 }
 
 /* ======================================================
-   WELCOME PAGE (DITAMBAHKAN — TIDAK MENGUBAH KODE DI ATAS)
+   WELCOME PAGE
    ====================================================== */
 
 body.welcome::before {
@@ -311,22 +310,58 @@ body.welcome::before {
 }
 
 @keyframes welcomeFade {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 600px) {
-  .welcome-container h1 {
-    font-size: 1.8rem;
-  }
+/* ======================================================
+   BOOK OPEN + REALISTIC PAGE FOLD
+   ====================================================== */
 
-  .welcome-container p {
-    font-size: 0.95rem;
-  }
+html {
+  perspective: 1600px;
+}
+
+body {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 2s ease-in-out, opacity 2s ease;
+}
+
+/* spine buku */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90px;
+  height: 100vh;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0)
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 2s ease;
+}
+
+body.book-open {
+  transform: rotateY(-105deg);
+  opacity: 0.15;
+  box-shadow: -40px 0 70px rgba(0,0,0,0.6);
+}
+
+body.book-open::after {
+  opacity: 1;
+}
+
+body.book-open::before {
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0.2),
+    rgba(0,0,0,0.45)
+  );
 }
