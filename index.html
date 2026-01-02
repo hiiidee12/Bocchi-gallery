@@ -3,12 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Welcome | Bocchi Gallery</title>
 
-  <!-- CSS -->
+  <!-- =========================
+       OPEN GRAPH PREVIEW
+       ========================= -->
+  <meta property="og:title" content="BOCCHI – My Gallery" />
+  <meta
+    property="og:description"
+    content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!"
+  />
+  <meta
+    property="og:image"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
+  <meta
+    property="og:image:secure_url"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://bocchi-gallery.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BOCCHI Gallery" />
+
+  <!-- =========================
+       TWITTER / X
+       ========================= -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BOCCHI – My Gallery" />
+  <meta
+    name="twitter:description"
+    content="Bocchi photo collection – gallery of Hitori Gotoh from Bocchi the Rock!"
+  />
+  <meta
+    name="twitter:image"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
+
+  <!-- =========================
+       FARCASTER FRAME
+       ========================= -->
+  <meta name="fc:frame" content="vNext" />
+  <meta
+    name="fc:frame:image"
+    content="https://bocchi-gallery.vercel.app/assets/photos/bocchiy.jpg"
+  />
+  <meta name="fc:frame:button:1" content="Open Gallery" />
+  <meta
+    name="fc:frame:post_url"
+    content="https://bocchi-gallery.vercel.app/gallery.html"
+  />
+
+  <!-- =========================
+       CSS
+       ========================= -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- STYLE -->
+  <!-- =========================
+       STYLE (WELCOME LAYOUT)
+       ========================= -->
   <style>
     .welcome-wrapper {
       min-height: 100vh;
@@ -45,22 +100,22 @@
     const visited = localStorage.getItem("visited_gallery");
     const enterBtn = document.getElementById("enterGallery");
 
-    /* open */
+    /* jika hanya sekali */
     if (ONE_TIME_ONLY && visited) {
       window.location.href = "gallery.html";
     }
 
-    /* redirect */
+    /* buka galeri (animasi buku) */
     function goToGallery(url) {
       document.body.classList.add("book-open");
       localStorage.setItem("visited_gallery", "true");
 
       setTimeout(() => {
         window.location.href = url;
-      }, 2000); //same
+      }, 2000); // harus sama dengan CSS
     }
 
-    /* button */
+    /* klik tombol */
     enterBtn.addEventListener("click", function(e) {
       e.preventDefault();
       goToGallery(this.href);
