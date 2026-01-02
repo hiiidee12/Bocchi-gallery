@@ -324,3 +324,19 @@ body.welcome::before {
   border-radius: 999px;
   font-weight: 600;
 }
+/* ======================================================
+   SAFE OPEN GALLERY ANIMATION
+   ====================================================== */
+
+.page-transition {
+  opacity: 0;
+  transform: scale(0.98);
+  animation: pageEnter 0.8s ease forwards;
+}
+
+@keyframes pageEnter {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
