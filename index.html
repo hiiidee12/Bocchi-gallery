@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Welcome | Bocchi Gallery</title>
 
-  <!-- CSS UTAMA -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- STYLE KHUSUS KONTEN WELCOME (TIDAK SENTUH BODY) -->
+  <!-- STYLE -->
   <style>
     .welcome-wrapper {
       min-height: 100vh;
@@ -38,29 +38,29 @@
        ========================= */
     const AUTO_REDIRECT = true;
     const REDIRECT_DELAY = 13000; // 13 detik
-    const ONE_TIME_ONLY = true;
+    const ONE_TIME_ONLY = false;
 
     /* ========================= */
 
     const visited = localStorage.getItem("visited_gallery");
     const enterBtn = document.getElementById("enterGallery");
 
-    /* jika sudah pernah masuk */
+    /* open */
     if (ONE_TIME_ONLY && visited) {
       window.location.href = "gallery.html";
     }
 
-    /* fungsi buka buku + redirect */
+    /* redirect */
     function goToGallery(url) {
       document.body.classList.add("book-open");
       localStorage.setItem("visited_gallery", "true");
 
       setTimeout(() => {
         window.location.href = url;
-      }, 2000); // HARUS sama dengan durasi CSS
+      }, 2000); //same
     }
 
-    /* klik tombol */
+    /* button */
     enterBtn.addEventListener("click", function(e) {
       e.preventDefault();
       goToGallery(this.href);
